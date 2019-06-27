@@ -9,11 +9,12 @@
 # Author: Sean Critica <sean.critica@toptal.com>
 
 
+# Import config
+. ./config.sh
+
+
 # Define globals
 MONITOR_CMD="conntrack -E -o extended"
-ACTIVE_FLAG="/var/run/monitoring_enabled"
-PID_FILE="/var/run/conntrack_monitor.pid"
-FIFO="/var/run/conntrack_monitor.fifo"
 
 
 process_monitor_line()
@@ -30,9 +31,9 @@ main()
 {
     echo "Starting connection tracking event monitoring..." >&2
 
-    create_fifo $FIFO
-    autorestart_monitor $ACTIVE_FLAG $PID_FILE "$MONITOR_CMD" $FIFO
-    destroy_fifo $FIFO
+    create_fifo $FIFO_CONNTRACK
+    autorestart_monitor $ACTIVE_FLAG $PID_FILE_CONNTRACK "$MONITOR_CMD" $FIFO_CONNTRACK
+    destroy_fifo $FIFO_CONNTRACK
 
     echo "Connection tracking event monitoring stopped." >&2
 }

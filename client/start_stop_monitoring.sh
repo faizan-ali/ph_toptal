@@ -8,16 +8,12 @@
 # Author: Sean Critica <sean.critica@toptal.com>
 
 
-# Define globals
-ACTIVE_FLAG="/var/run/monitoring_enabled"
+# Import config
+. ./config.sh
 
-SCRIPT_CONNTRACK="./conntrack_monitor.sh"
-PID_FILE_CONNTRACK="/var/run/conntrack_monitor.pid"
 
-SCRIPT_MAC="./mac_address_monitor.sh"
-PID_FILE_MAC="/var/run/mac_monitor.pid"
-
-TEST_FILE=/tmp/monitor_debug.out
+# Import common library
+. ./common_utils.sh
 
 
 set_active_flag()
@@ -32,7 +28,7 @@ unset_active_flag()
 
 start_script()
 {
-    nohup $1 >> $TEST_FILE 2>/dev/null &
+    nohup $1 >> $2 2>/dev/null &
 }
 
 stop_pid()
@@ -47,16 +43,30 @@ stop_pid()
 
 startup()
 {
+    echo "Enabling active flag."
     set_active_flag
-    start_script $SCRIPT_CONNTRACK
-    start_script $SCRIPT_MAC
+
+    echo "Creating feeds."
+    create_fifo $FEED_CONNTRACK
+    create_fifo $FEED_MAC
+
+    echo "Starting monitoring scripts."
+    start_script $SCRIPT_CONNTRACK $FEED_CONNTRACK
+    start_script $SCRIPT_MAC $FEED_MAC
+
+    echo "Starting communicator."
+    start_script $SCRIPT_COMMUNICATOR /tmp/communication.log
 }
 
 shutdown()
 {
     unset_active_flag
+
     stop_pid $PID_FILE_CONNTRACK
     stop_pid $PID_FILE_MAC
+
+    destroy_fifo $FEED_CONNTRACK
+    destroy_fifo $FEED_MAC
 }
 
 main()
@@ -69,8 +79,8 @@ main()
             shutdown
             ;;
         restart)
-            startup
             shutdown
+            startup
             ;;
         *)
             echo "Command not specified."

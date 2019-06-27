@@ -9,12 +9,13 @@
 # Author: Sean Critica <sean.critica@toptal.com>
 
 
+# Import config
+. ./config.sh
+
+
 # Define globals
 MONITOR_CMD="ip monitor neigh dev br-lan"
 DNS_CMD="nslookup"
-ACTIVE_FLAG="/var/run/monitoring_enabled"
-PID_FILE="/var/run/mac_monitor.pid"
-FIFO="/var/run/mac_monitor.fifo"
 
 
 process_monitor_line()
@@ -44,9 +45,9 @@ main()
 {
     echo "Starting MAC and hostname monitoring..." >&2
 
-    create_fifo $FIFO
-    autorestart_monitor $ACTIVE_FLAG $PID_FILE "$MONITOR_CMD" $FIFO
-    destroy_fifo $FIFO
+    create_fifo $FIFO_MAC
+    autorestart_monitor $ACTIVE_FLAG $PID_FILE_MAC "$MONITOR_CMD" $FIFO_MAC
+    destroy_fifo $FIFO_MAC
 
     echo "MAC and hostname monitoring stopped." >&2
 }
