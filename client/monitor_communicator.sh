@@ -34,15 +34,17 @@ close_feeds()
 
 collect_data_from_feed()
 {
-    local line=''
-    read -r -t $READ_TIMEOUT line <&$1
-    POST_DATA=$line
-    while [ ! -z "$line" ]
-    do
+    if read -rt 0 <&$1; then
+        local line=''
         read -r -t $READ_TIMEOUT line <&$1
-        POST_DATA=$POST_DATA$'\n'$line
-        line=''
-    done
+        POST_DATA=$line
+        while [ ! -z "$line" ]
+        do
+            read -r -t $READ_TIMEOUT line <&$1
+            POST_DATA=$POST_DATA$'\n'$line
+            line=''
+        done
+   fi
 }
 
 
@@ -71,7 +73,7 @@ main()
     do
         collect_data
         send_data
-        luasleep $SEND_INTERVAL
+        sleep $SEND_INTERVAL
     done
 
     close_feeds
