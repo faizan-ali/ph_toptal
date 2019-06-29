@@ -36,8 +36,14 @@ collect_data_from_feed()
 {
     if read -rt 0 <&$1; then
         local line=''
+
         read -r -t $READ_TIMEOUT line <&$1
-        POST_DATA=$line
+        if [ ! -z "$POST_DATA" ]; then
+            POST_DATA=$POST_DATA$'\n'$line
+        else
+            POST_DATA=$line
+        fi
+
         while [ ! -z "$line" ]
         do
             read -r -t $READ_TIMEOUT line <&$1
@@ -50,6 +56,7 @@ collect_data_from_feed()
 
 collect_data()
 {
+    POST_DATA=''
     collect_data_from_feed 11
     collect_data_from_feed 12
 }
