@@ -28,7 +28,7 @@ unset_active_flag()
 
 start_script()
 {
-    nohup $1 >> $2 2>/dev/null &
+    nohup $1 >$DEBUG_LOG 2>&1 &
 }
 
 stop_pid()
@@ -51,11 +51,13 @@ startup()
     create_fifo $FEED_MAC
 
     echo "Starting monitoring scripts."
-    start_script $SCRIPT_CONNTRACK $FEED_CONNTRACK
-    start_script $SCRIPT_MAC $FEED_MAC
+    start_script $SCRIPT_CONNTRACK
+    start_script $SCRIPT_MAC
+
+    sleep 2
 
     echo "Starting communicator."
-    start_script $SCRIPT_COMMUNICATOR /tmp/communication.log
+    start_script $SCRIPT_COMMUNICATOR
 }
 
 shutdown()
@@ -80,6 +82,7 @@ main()
             ;;
         restart)
             shutdown
+            sleep 20
             startup
             ;;
         *)

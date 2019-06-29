@@ -86,3 +86,14 @@ autorestart_monitor()
 }
 
 
+# Args:
+# TIME - seconds to sleep, can be fractional
+#
+# This function exists because busybox only supports
+# 1-sec precision sleep. Lua is installed on OpenWRT
+# by default.
+luasleep()
+{
+    lua ./sleep.lua $1
+}
+

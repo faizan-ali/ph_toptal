@@ -15,6 +15,7 @@
 
 # Define globals
 POST_DATA=""
+CURL_COMMAND='/usr/bin/curl -f -H PHN-id:'$UUID' -H Content-Type:text/plain --data-binary'
 
 
 open_feeds()
@@ -33,18 +34,20 @@ close_feeds()
 
 collect_data_from_feed()
 {
+    local line=''
     read -r -t $READ_TIMEOUT line <&$1
+    POST_DATA=$line
     while [ ! -z "$line" ]
     do
-        POST_DATA="$POST_DATA"$'\n'"$line"
         read -r -t $READ_TIMEOUT line <&$1
+        POST_DATA=$POST_DATA$'\n'$line
+        line=''
     done
 }
 
 
 collect_data()
 {
-    POST_DATA=""
     collect_data_from_feed 11
     collect_data_from_feed 12
 }
@@ -53,10 +56,7 @@ collect_data()
 send_data()
 {
     if [ ! -z "$POST_DATA" ]; then
-        echo "Sending data"
-        echo "========================"
-        echo "$POST_DATA"
-        echo "========================"
+        $CURL_COMMAND "$POST_DATA" $POST_URL
     fi
 }
 
@@ -71,7 +71,7 @@ main()
     do
         collect_data
         send_data
-        sleep $SEND_INTERVAL
+        luasleep $SEND_INTERVAL
     done
 
     close_feeds

@@ -14,12 +14,19 @@
 
 
 # Define globals
+#MONITOR_CMD="conntrack -E -e NEW -e DESTROY -o extended"
 MONITOR_CMD="conntrack -E -o extended"
 
 
 process_monitor_line()
 {
-    echo "CON $*"
+    for tok in $@
+    do
+        if [ "$tok" == "dst=$POST_IP" ]; then
+            return
+        fi
+    done
+    echo "CON $*" >> $FEED_CONNTRACK
 }
 
 

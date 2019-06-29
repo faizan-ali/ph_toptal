@@ -32,7 +32,7 @@ process_monitor_line()
             hostname="${line##* }"
         fi
 
-        echo "MAC $ipaddr $mac $hostname"
+        echo "MAC $ipaddr $mac $hostname" >> $FEED_MAC
     fi
 }
 
