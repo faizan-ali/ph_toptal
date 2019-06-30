@@ -9,11 +9,11 @@
 
 
 # Import config
-. ./config.sh
+. $SCRIPT_BASE_DIR/config.sh
 
 
 # Import common library
-. ./common_utils.sh
+. $SCRIPT_BASE_DIR/common_utils.sh
 
 
 set_active_flag()

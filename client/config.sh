@@ -7,9 +7,9 @@
 
 ACTIVE_FLAG="/var/run/monitoring_enabled"
 
-SCRIPT_MAC="./mac_address_monitor.sh"
-SCRIPT_CONNTRACK="./conntrack_monitor.sh"
-SCRIPT_COMMUNICATOR="./monitor_communicator.sh"
+SCRIPT_MAC="$SCRIPT_BASE_DIR/mac_address_monitor.sh"
+SCRIPT_CONNTRACK="$SCRIPT_BASE_DIR/conntrack_monitor.sh"
+SCRIPT_COMMUNICATOR="$SCRIPT_BASE_DIR/monitor_communicator.sh"
 
 PID_FILE_MAC="/var/run/mac_monitor.pid"
 PID_FILE_CONNTRACK="/var/run/conntrack_monitor.pid"
@@ -21,7 +21,7 @@ FEED_MAC="/var/run/mac_monitor.feed"
 FEED_CONNTRACK="/var/run/contrack_monitor.feed"
 
 # Variables that control forwarding data to the server
-UUID="6b7e2239-2bc2-4391-920c-337ba65f16ce"
+UUID="<unset>"
 READ_TIMEOUT=1
 SEND_INTERVAL=0.5
 

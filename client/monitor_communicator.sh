@@ -10,7 +10,7 @@
 
 
 # Import config
-. ./config.sh
+. $SCRIPT_BASE_DIR/config.sh
 
 
 # Define globals

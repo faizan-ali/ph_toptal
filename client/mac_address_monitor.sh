@@ -10,7 +10,7 @@
 
 
 # Import config
-. ./config.sh
+. $SCRIPT_BASE_DIR/config.sh
 
 
 # Define globals
@@ -38,7 +38,7 @@ process_monitor_line()
 
 
 # Import libraries
-. ./common_utils.sh
+. $SCRIPT_BASE_DIR/common_utils.sh
 
 
 main()
