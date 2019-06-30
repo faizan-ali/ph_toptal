@@ -1,0 +1,23 @@
+#!/bin/sh /etc/rc.common
+# PHN Data Monitor control script
+#
+# Author: sean.critica@toptal.com
+
+START=99
+STOP=1
+
+export SCRIPT_BASE_DIR="<unset>"
+CONTROL_SCRIPT="$SCRIPT_BASE_DIR/start_stop_monitoring.sh"
+
+start() {
+    $CONTROL_SCRIPT start
+}
+
+stop() {
+    $CONTROL_SCRIPT stop
+}
+
+restart() {
+    $CONTROL_SCRIPT restart
+}
+
