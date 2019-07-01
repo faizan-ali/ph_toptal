@@ -23,6 +23,7 @@ define Package/phn-datamonitor
         +conntrack \
         +curl \
         +coreutils-sleep \
+        +coreutils-nohup \
 
     TITLE:=Network data collection agent for PH Networks security system
     MAINTAINER:=Sean Critica <sean.critica@toptal.com>
