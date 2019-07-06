@@ -30,7 +30,7 @@ OpenWRT development prefers a Debian/Ubuntu-based development environment.
 4. Add the package to the OpenWRT feeds.
     ```
     # cd openwrt
-    # echo "src-link phn_packages ../ph_toptal/packages" > feeds.conf
+    # echo "src-link phn_packages $(pwd)/../ph_toptal/packages" > feeds.conf
     # ./scripts/feeds update -a
     # ./scripts/feeds install -a
     ```
