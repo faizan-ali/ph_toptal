@@ -30,9 +30,9 @@ OpenWRT development prefers a Debian/Ubuntu-based development environment.
 4. Add the package to the OpenWRT feeds.
     ```
     # cd openwrt
-    # echo "src-link phn-packages ../ph_toptal/packages" > feeds.conf
-    # ./script/feeds update -a
-    # ./script/feeds install -a
+    # echo "src-link phn_packages ../ph_toptal/packages" > feeds.conf
+    # ./scripts/feeds update -a
+    # ./scripts/feeds install -a
     ```
 
 ### Configuring the Environment and Building the Package
@@ -41,7 +41,7 @@ OpenWRT development prefers a Debian/Ubuntu-based development environment.
        ```
        # make menuconfig
        ```
-    2. Enable ip-full in Network -> Routing -> ip-full
+    2. Enable ip-full in Network -> Routing and Redirection -> ip-full
     3. Enable conntrack in Network -> Firewall -> conntrack
     4. Enable curl in Network -> File Transfer -> curl
     5. Enable coreutils in Utilities -> coreutils
