@@ -58,13 +58,13 @@ OpenWRT development prefers a Debian/Ubuntu-based development environment.
 
 7. Build the package.
     ```
-    # make package/phn-dataclient/compile
+    # make package/phn-datamonitor/compile
     ```
 
 ### Installing the Package
 8. Copy the package to your router.
     ```
-    # scp bin/packages/<arch>/phn-packages/phn-datamonitor-<version>.ipk root@<router ip>:~/.
+    # scp bin/packages/<arch>/phn_packages/phn-datamonitor-<version>.ipk root@<router ip>:~/.
     ```
 
 9. Install using opkg.
